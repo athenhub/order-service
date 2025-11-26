@@ -83,6 +83,6 @@ public class Price {
   }
 
   public boolean isZeroOrNegative() {
-    return amount != null && this.amount > 0;
+    return amount != null && this.amount <= 0;
   }
 }

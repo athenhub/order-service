@@ -4,6 +4,7 @@ import com.athenhub.orderservice.domain.vo.OrderDetailId;
 import com.athenhub.orderservice.domain.vo.OrderId;
 import com.athenhub.orderservice.domain.vo.Orderer;
 import com.athenhub.orderservice.domain.vo.Price;
+import com.athenhub.orderservice.domain.vo.ShippingAddress;
 import com.athenhub.orderservice.domain.vo.ShippingId;
 import com.athenhub.orderservice.domain.vo.VendorId;
 import com.athenhub.orderservice.global.domain.AbstractAuditEntity;
@@ -120,15 +121,14 @@ public class Order extends AbstractAuditEntity {
       ShippingId shippingId,
       LocalDateTime shippedAt) {
 
-    this.id = Objects.requireNonNull(id, "OrderId 는 null일 수 없습니다.");
-    this.orderer = Objects.requireNonNull(orderer, "Orderer 는 null일 수 없습니다.");
-    this.receiverId = Objects.requireNonNull(receiverId, "ReceiverId 는 null일 수 없습니다.");
+    this.id = Objects.requireNonNull(id);
+    this.orderer = Objects.requireNonNull(orderer);
+    this.receiverId = Objects.requireNonNull(receiverId);
     this.shippingDueAt = shippingDueAt;
     this.shippingRequestMemo = shippingRequestMemo;
-    this.status = Objects.requireNonNull(status, "OrderStatus 는 null일 수 없습니다.");
-    this.totalPrice = Objects.requireNonNull(totalPrice, "TotalPrice 는 null일 수 없습니다.");
-    this.shippingAddress =
-        Objects.requireNonNull(shippingAddress, "ShippingAddress 는 null일 수 없습니다.");
+    this.status = Objects.requireNonNull(status);
+    this.totalPrice = Objects.requireNonNull(totalPrice);
+    this.shippingAddress = shippingAddress;
     this.shippingId = shippingId;
     this.shippedAt = shippedAt;
   }

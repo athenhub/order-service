@@ -1,8 +1,9 @@
-package com.athenhub.orderservice.domain;
+package com.athenhub.orderservice.domain.vo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
  */
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class ShippingAddress {
 
   /** 기본 배송지 주소. */
