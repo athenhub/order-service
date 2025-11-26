@@ -1,8 +1,8 @@
 package com.athenhub.orderservice.domain.dto;
 
-import com.athenhub.orderservice.domain.Order;
 import com.athenhub.orderservice.domain.vo.OrderProduct;
 import java.util.UUID;
+import lombok.Builder;
 
 /**
  * 주문 상세 생성을 위한 커맨드 객체이다.
@@ -16,9 +16,8 @@ import java.util.UUID;
  * @author 김지원
  * @since 1.0.0
  */
+@Builder
 public record OrderDetailCreateCommand(
-    /* 주문 상세 식별자. (일반적으로 Domain에서 새로 생성되므로 필수는 아님) */
-    UUID id,
 
     /* 상품 공급자(업체) 식별자. */
     UUID producerId,
@@ -26,17 +25,17 @@ public record OrderDetailCreateCommand(
     /* 허브 식별자. */
     UUID hubId,
 
-    /* 주문 상품 도메인 객체 (직접 전달되는 경우). */
-    OrderProduct orderProduct,
-
-    /* 상위 주문 엔티티. */
-    Order order,
-
     /* 상품 식별자. */
     UUID productId,
 
+    /* 상품 이름. */
+    String productName,
+
     /* 상품 옵션 식별자. */
     UUID productVariantId,
+
+    /* 옵션 이름. */
+    String productVariantName,
 
     /* 상품 단가(개당 가격). */
     long unitPrice,
@@ -54,6 +53,7 @@ public record OrderDetailCreateCommand(
    * @since 1.0.0
    */
   public OrderProductCreateCommand toOrderProductCreateCommand() {
-    return new OrderProductCreateCommand(productId, productVariantId, unitPrice, quantity);
+    return new OrderProductCreateCommand(
+        productId, productName, productVariantId, productVariantName, unitPrice, quantity);
   }
 }

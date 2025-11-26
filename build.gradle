@@ -71,6 +71,9 @@ dependencies {
     // PostgreSQL
     implementation 'org.postgresql:postgresql'
 
+    // open feign
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
     // common
     implementation 'com.athenhub:common-mvc:1.2.0'
 

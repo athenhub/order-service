@@ -14,13 +14,12 @@ public class OrderDetailFixture {
 
   public static OrderDetailCreateCommand createCommand(long unitPrice, int quantity) {
     return new OrderDetailCreateCommand(
-        null,
         UUID.randomUUID(),
         UUID.randomUUID(),
-        null,
-        null,
         UUID.randomUUID(),
+        "name",
         UUID.randomUUID(),
+        "variantName",
         unitPrice,
         quantity);
   }

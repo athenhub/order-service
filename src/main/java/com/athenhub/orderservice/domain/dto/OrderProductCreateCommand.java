@@ -15,9 +15,14 @@ import java.util.UUID;
 public record OrderProductCreateCommand(
     /* 상품 식별자. */
     UUID productId,
+    /* 상품 이름. */
+    String name,
 
     /* 상품 옵션 식별자. */
     UUID productVariantId,
+
+    /* 상품 옵션 값. */
+    String variantName,
 
     /* 상품 단가(개당 가격). */
     long unitPrice,

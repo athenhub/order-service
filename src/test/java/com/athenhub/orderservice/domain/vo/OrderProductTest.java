@@ -20,7 +20,8 @@ class OrderProductTest {
   @DisplayName("정상적인 값으로 OrderProduct를 생성할 수 있다.")
   void create_success() {
     OrderProductCreateCommand command =
-        new OrderProductCreateCommand(UUID.randomUUID(), UUID.randomUUID(), 1_000L, 2);
+        new OrderProductCreateCommand(
+            UUID.randomUUID(), "name", UUID.randomUUID(), "variant", 1_000L, 2);
 
     OrderProduct orderProduct = OrderProduct.create(command);
 
@@ -32,7 +33,8 @@ class OrderProductTest {
   @DisplayName("수량이 0 이하이면 예외가 발생한다.")
   void create_withInvalidQuantity_shouldFail() {
     OrderProductCreateCommand command =
-        new OrderProductCreateCommand(UUID.randomUUID(), UUID.randomUUID(), 1_000L, 0);
+        new OrderProductCreateCommand(
+            UUID.randomUUID(), "name", UUID.randomUUID(), "variant", 1_000L, 0);
 
     assertThatThrownBy(() -> OrderProduct.create(command))
         .isInstanceOf(IllegalStateException.class)
@@ -43,7 +45,8 @@ class OrderProductTest {
   @DisplayName("단가가 0 이하이면 예외가 발생한다.")
   void create_withInvalidUnitPrice_shouldFail() {
     OrderProductCreateCommand command =
-        new OrderProductCreateCommand(UUID.randomUUID(), UUID.randomUUID(), 0L, 1);
+        new OrderProductCreateCommand(
+            UUID.randomUUID(), "name", UUID.randomUUID(), "variant", 0, 1);
 
     assertThatThrownBy(() -> OrderProduct.create(command))
         .isInstanceOf(IllegalStateException.class)
@@ -54,7 +57,8 @@ class OrderProductTest {
   @DisplayName("총 금액은 단가 * 수량으로 계산된다.")
   void calculateTotalPrice() {
     OrderProductCreateCommand command =
-        new OrderProductCreateCommand(UUID.randomUUID(), UUID.randomUUID(), 5_000L, 3);
+        new OrderProductCreateCommand(
+            UUID.randomUUID(), "name", UUID.randomUUID(), "variant", 5_000L, 3);
 
     OrderProduct orderProduct = OrderProduct.create(command);
 

@@ -1,5 +1,6 @@
 package com.athenhub.orderservice.domain;
 
+import com.athenhub.orderservice.domain.dto.OrderCreateCommand;
 import com.athenhub.orderservice.domain.vo.OrderDetailId;
 import com.athenhub.orderservice.domain.vo.OrderId;
 import com.athenhub.orderservice.domain.vo.Orderer;
