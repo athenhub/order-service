@@ -87,7 +87,7 @@ class OrderTest {
     Order order = OrderFixture.create();
     order.completed(LocalDateTime.now());
 
-    assertThatThrownBy(() -> order.cancel(LocalDateTime.now()))
+    assertThatThrownBy(() -> order.cancel("", LocalDateTime.now()))
         .isInstanceOf(IllegalStateException.class)
         .hasMessageContaining("상태를 변경할 수 없습니다.");
   }

@@ -1,5 +1,6 @@
 package com.athenhub.orderservice.domain.vo;
 
+import com.athenhub.orderservice.domain.OrderDetail;
 import com.athenhub.orderservice.domain.dto.OrderProductCreateCommand;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
@@ -8,6 +9,7 @@ import jakarta.persistence.Embedded;
 import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
@@ -23,16 +25,17 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode
+@Getter
 public class OrderProduct {
 
   /** 상품 ID. */
   @Embedded private ProductId productId;
 
   /** 상품명. */
-  private String name;
+  private String productName;
 
   /** 옵션명(색상/사이즈 등). */
-  private String variantName;
+  private String productVariantName;
 
   /** 상품 옵션 ID. */
   @Embedded private ProductVariantId productVariantId;
@@ -49,25 +52,25 @@ public class OrderProduct {
    * OrderProduct를 생성한다.
    *
    * @param productId 상품 ID
-   * @param name 상품명
+   * @param productName 상품명
    * @param productVariantId 상품 옵션 ID
-   * @param variantName 옵션명
+   * @param productVariantName 옵션명
    * @param unitPrice 단가
    * @param quantity 수량
    */
   private OrderProduct(
       ProductId productId,
-      String name,
+      String productName,
       ProductVariantId productVariantId,
-      String variantName,
+      String productVariantName,
       Price unitPrice,
       int quantity) {
 
     validateQuantity(quantity);
     validatePrice(unitPrice);
 
-    this.name = Objects.requireNonNull(name);
-    this.variantName = Objects.requireNonNull(variantName);
+    this.productName = Objects.requireNonNull(productName);
+    this.productVariantName = Objects.requireNonNull(productVariantName);
     this.productId = Objects.requireNonNull(productId);
     this.productVariantId = Objects.requireNonNull(productVariantId);
     this.unitPrice = Objects.requireNonNull(unitPrice);

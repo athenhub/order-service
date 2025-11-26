@@ -83,6 +83,10 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok'
     testCompileOnly 'org.projectlombok:lombok'
 
+    // RabbitMQ
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation 'org.springframework.amqp:spring-rabbit-stream'
+
     // archunit
     testImplementation 'com.tngtech.archunit:archunit-junit5:1.4.1'
 

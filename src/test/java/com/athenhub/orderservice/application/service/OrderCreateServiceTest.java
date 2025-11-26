@@ -2,10 +2,14 @@ package com.athenhub.orderservice.application.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.athenhub.orderservice.application.dto.OrderProductRequest;
+import com.athenhub.orderservice.application.event.OrderCreatedEventPublisher;
 import com.athenhub.orderservice.application.service.dto.OrderCreateResponse;
 import com.athenhub.orderservice.application.service.dto.ProductInfo;
 import com.athenhub.orderservice.application.service.dto.ShippingInfo;
@@ -41,6 +45,8 @@ class OrderCreateServiceTest {
   @Autowired private OrderRepository orderRepository;
 
   @MockitoBean private SearchProductService searchProductService;
+
+  @MockitoBean private OrderCreatedEventPublisher eventPublisher;
 
   @Test
   @DisplayName("주문을 생성하고 OrderDetail이 정상적으로 추가된다.")
@@ -82,6 +88,9 @@ class OrderCreateServiceTest {
         .hasSize(2)
         .extracting("orderProduct.unitPrice.amount", "orderProduct.quantity")
         .containsExactlyInAnyOrder(tuple(10_000L, 2), tuple(20_000L, 1));
+
+    // 이벤트 발행 확인
+    verify(eventPublisher, times(1)).publish(any());
   }
 
   /**

@@ -1,7 +1,9 @@
 package com.athenhub.orderservice.application.service;
 
 import com.athenhub.commoncore.error.GlobalErrorCode;
+import com.athenhub.orderservice.application.dto.OrderCreatedEvent;
 import com.athenhub.orderservice.application.dto.OrderProductRequest;
+import com.athenhub.orderservice.application.event.OrderCreatedEventPublisher;
 import com.athenhub.orderservice.application.exception.OrderServiceException;
 import com.athenhub.orderservice.application.service.dto.OrderCreateResponse;
 import com.athenhub.orderservice.application.service.dto.ProductInfo;
@@ -36,6 +38,7 @@ public class OrderCreateService {
 
   private final SearchProductService searchProductService;
   private final OrderRepository orderRepository;
+  private final OrderCreatedEventPublisher eventPublisher;
 
   /**
    * 주문을 생성한다.
@@ -59,6 +62,9 @@ public class OrderCreateService {
     addOrderDetails(order, productInfos, orderProductMap);
 
     orderRepository.save(order);
+
+    OrderCreatedEvent orderCreatedEvent = OrderCreatedEvent.from(order);
+    eventPublisher.publish(orderCreatedEvent);
 
     return new OrderCreateResponse(order.getId().toUuid());
   }
