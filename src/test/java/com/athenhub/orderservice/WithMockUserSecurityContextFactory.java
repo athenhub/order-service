@@ -1,4 +1,4 @@
-package com.athenhub.projectinterface;
+package com.athenhub.orderservice;
 
 import com.athenhub.commonmvc.security.AuthenticatedUser;
 import java.util.Arrays;
