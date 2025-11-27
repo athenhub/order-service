@@ -31,8 +31,6 @@ class OrderTest {
     assertThat(order.getOrderer().getId()).isNotNull();
     assertThat(order.getOrderer().getSlackId()).isNotNull();
     assertThat(order.getOrderer().getName()).isNotNull();
-
-    assertThat(order.getReceiverId()).isNotNull();
     assertThat(order.getShippingId()).isNull();
 
     assertThat(order.getStatus()).isEqualTo(OrderStatus.CREATED);

@@ -107,7 +107,6 @@ public class Order extends AbstractAuditEntity {
    *
    * @param id 주문 ID
    * @param orderer 주문자 정보
-   * @param receiverId 수령 업체 ID
    * @param shippingDueAt 납품 기한
    * @param shippingRequestMemo 배송 요청 메모
    * @param status 초기 주문 상태
@@ -119,7 +118,6 @@ public class Order extends AbstractAuditEntity {
   private Order(
       OrderId id,
       Orderer orderer,
-      VendorId receiverId,
       LocalDateTime shippingDueAt,
       String shippingRequestMemo,
       OrderStatus status,
@@ -130,7 +128,6 @@ public class Order extends AbstractAuditEntity {
 
     this.id = Objects.requireNonNull(id);
     this.orderer = Objects.requireNonNull(orderer);
-    this.receiverId = Objects.requireNonNull(receiverId);
     this.shippingDueAt = shippingDueAt;
     this.shippingRequestMemo = shippingRequestMemo;
     this.status = Objects.requireNonNull(status);
@@ -160,7 +157,6 @@ public class Order extends AbstractAuditEntity {
             orderCreateCommand.ordererId(),
             orderCreateCommand.ordererName(),
             orderCreateCommand.slackId()),
-        VendorId.of(orderCreateCommand.receiverId()),
         orderCreateCommand.shippingDueAt(),
         orderCreateCommand.shippingRequestMemo(),
         OrderStatus.CREATED,
