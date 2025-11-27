@@ -39,3 +39,6 @@ rabbit:
     created:
       routing-key: order.created
       queue: order.created.queue
+    shipping:
+      routing-key: order.shipping
+      queue: order.shipping.queue

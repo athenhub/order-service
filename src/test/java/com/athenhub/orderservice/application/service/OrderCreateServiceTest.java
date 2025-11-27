@@ -82,7 +82,7 @@ class OrderCreateServiceTest {
     assertThat(savedOrder).isNotNull();
     assertThat(savedOrder.getTotalPrice().value()).isEqualTo(40_000L);
 
-    List<OrderDetail> orderDetails = savedOrder.getOrderDetails().getValues();
+    List<OrderDetail> orderDetails = savedOrder.getOrderDetails().toList();
 
     assertThat(orderDetails)
         .hasSize(2)

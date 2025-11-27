@@ -71,7 +71,7 @@ public class OrderDetails {
    *
    * @return 불변 주문 상세 리스트
    */
-  public List<OrderDetail> getValues() {
+  public List<OrderDetail> toList() {
     return List.copyOf(values);
   }
 }

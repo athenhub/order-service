@@ -18,6 +18,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *     created:
  *       queue: order.created.queue
  *       routing-key: order.created
+ *     shipping:
+ *       queue: order.shipping.queue
+ *       routing-key: order.shipping
  * </pre>
  *
  * <p>주요 설정 값:
@@ -26,6 +29,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *   <li>{@code exchange} : 주문 관련 이벤트를 발행하는 Exchange 이름
  *   <li>{@code created.queue} : 주문 생성 이벤트 수신 Queue 이름
  *   <li>{@code created.routing-key} : 주문 생성 이벤트 Routing Key
+ *   <li>{@code shipping.queue} : 배송 요청 이벤트 수신 Queue 이름
+ *   <li>{@code shipping.routing-key} : 배송 요청 이벤트 Routing Key
  * </ul>
  *
  * @author 김지원
@@ -41,6 +46,9 @@ public class RabbitOrderProperties {
   /** 주문 생성(OrderCreatedEvent) 관련 설정. */
   private Created created;
 
+  /** 배송 요청(OrderShippingEvent) 관련 설정. */
+  private Shipping shipping;
+
   /**
    * 주문 생성 이벤트 관련 설정이다.
    *
@@ -54,6 +62,22 @@ public class RabbitOrderProperties {
     private String queue;
 
     /** 주문 생성 이벤트용 Routing Key. */
+    private String routingKey;
+  }
+
+  /**
+   * 배송 요청 이벤트 관련 설정이다.
+   *
+   * @author 김지원
+   * @since 1.0.0
+   */
+  @Data
+  public static class Shipping {
+
+    /** 배송 요청 이벤트를 수신하는 Queue 이름. */
+    private String queue;
+
+    /** 배송 요청 이벤트용 Routing Key. */
     private String routingKey;
   }
 }

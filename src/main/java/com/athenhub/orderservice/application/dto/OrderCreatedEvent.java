@@ -63,7 +63,7 @@ public record OrderCreatedEvent(
       int quantity) {}
 
   private static List<OrderedProduct> toOrderedProducts(Order order) {
-    return order.getOrderDetails().getValues().stream()
+    return order.getOrderDetails().toList().stream()
         .map(
             it -> {
               OrderProduct orderProduct = it.getOrderProduct();
