@@ -1,7 +1,7 @@
 package com.athenhub.orderservice.fixture;
 
 import com.athenhub.orderservice.domain.Order;
-import com.athenhub.orderservice.domain.OrderCreateCommand;
+import com.athenhub.orderservice.domain.dto.OrderCreateCommand;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -16,9 +16,9 @@ public class OrderFixture {
   public static OrderCreateCommand validCreateCommand() {
     return new OrderCreateCommand(
         UUID.randomUUID(),
-        UUID.randomUUID(),
         "테스터1",
         "slack-id",
+        UUID.randomUUID(),
         "서울시 강남구",
         "101동 202호",
         LocalDateTime.now().plusDays(1),
@@ -28,9 +28,9 @@ public class OrderFixture {
   public static OrderCreateCommand pastDueCreateCommand() {
     return new OrderCreateCommand(
         UUID.randomUUID(),
-        UUID.randomUUID(),
         "테스터1",
         "slack-id",
+        UUID.randomUUID(),
         "서울시 강남구",
         "101동 202호",
         LocalDateTime.now().minusDays(1),

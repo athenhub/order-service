@@ -1,5 +1,6 @@
 package com.athenhub.orderservice.domain;
 
+import com.athenhub.orderservice.domain.dto.OrderCreateCommand;
 import com.athenhub.orderservice.domain.vo.OrderDetailId;
 import com.athenhub.orderservice.domain.vo.OrderId;
 import com.athenhub.orderservice.domain.vo.Orderer;
@@ -80,8 +81,14 @@ public class Order extends AbstractAuditEntity {
   /** 주문 취소 시각. */
   private LocalDateTime canceledAt;
 
+  /** 주문 취소 이유. */
+  private String cancelReason;
+
   /** 주문 상세(상품 목록). */
   @Embedded private OrderDetails orderDetails = new OrderDetails();
+
+  /** 재고가 차감되어 배송을 기다리는 상태 */
+  private LocalDateTime reservedAt;
 
   /**
    * 주문 상세를 기반으로 총 금액을 재계산한다.
@@ -100,7 +107,6 @@ public class Order extends AbstractAuditEntity {
    *
    * @param id 주문 ID
    * @param orderer 주문자 정보
-   * @param receiverId 수령 업체 ID
    * @param shippingDueAt 납품 기한
    * @param shippingRequestMemo 배송 요청 메모
    * @param status 초기 주문 상태
@@ -112,7 +118,6 @@ public class Order extends AbstractAuditEntity {
   private Order(
       OrderId id,
       Orderer orderer,
-      VendorId receiverId,
       LocalDateTime shippingDueAt,
       String shippingRequestMemo,
       OrderStatus status,
@@ -123,7 +128,6 @@ public class Order extends AbstractAuditEntity {
 
     this.id = Objects.requireNonNull(id);
     this.orderer = Objects.requireNonNull(orderer);
-    this.receiverId = Objects.requireNonNull(receiverId);
     this.shippingDueAt = shippingDueAt;
     this.shippingRequestMemo = shippingRequestMemo;
     this.status = Objects.requireNonNull(status);
@@ -153,7 +157,6 @@ public class Order extends AbstractAuditEntity {
             orderCreateCommand.ordererId(),
             orderCreateCommand.ordererName(),
             orderCreateCommand.slackId()),
-        VendorId.of(orderCreateCommand.receiverId()),
         orderCreateCommand.shippingDueAt(),
         orderCreateCommand.shippingRequestMemo(),
         OrderStatus.CREATED,
@@ -198,12 +201,21 @@ public class Order extends AbstractAuditEntity {
    *
    * @param canceledAt 주문 취소 시각
    */
-  public void cancel(LocalDateTime canceledAt) {
+  public void cancel(String cancelReason, LocalDateTime canceledAt) {
 
     validateCanChangeStatus();
 
-    this.status = OrderStatus.CANCEL;
+    this.status = OrderStatus.CANCELLED;
     this.canceledAt = canceledAt;
+    this.cancelReason = cancelReason;
+  }
+
+  public void reserved(LocalDateTime reservedAt) {
+
+    validateCanChangeStatus();
+
+    this.status = OrderStatus.RESERVED;
+    this.reservedAt = reservedAt;
   }
 
   /**
@@ -246,7 +258,7 @@ public class Order extends AbstractAuditEntity {
    * <p>이미 COMPLETED 또는 CANCEL 상태인 경우 상태 변경이 불가능하다.
    */
   private void validateCanChangeStatus() {
-    if (this.status == OrderStatus.CANCEL || this.status == OrderStatus.COMPLETED) {
+    if (this.status == OrderStatus.CANCELLED || this.status == OrderStatus.COMPLETED) {
       throw new IllegalStateException("이미 완료되었거나 취소된 주문은 상태를 변경할 수 없습니다.");
     }
   }

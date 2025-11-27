@@ -71,14 +71,14 @@ class OrderDetailsTest {
 
   @Test
   @DisplayName("주문 상세 목록은 외부에서 수정할 수 없는 불변 리스트를 반환한다.")
-  void getValues_returnsImmutableList() {
+  void toList_returnsImmutableList() {
 
     Order order = OrderFixture.create();
 
     OrderDetail detail = OrderDetailFixture.create(1_000L, 1);
     order.addOrderDetail(detail);
 
-    assertThatThrownBy(() -> order.getOrderDetails().getValues().add(detail))
+    assertThatThrownBy(() -> order.getOrderDetails().toList().add(detail))
         .isInstanceOf(UnsupportedOperationException.class);
   }
 }

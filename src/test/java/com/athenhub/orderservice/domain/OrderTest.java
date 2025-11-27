@@ -31,8 +31,6 @@ class OrderTest {
     assertThat(order.getOrderer().getId()).isNotNull();
     assertThat(order.getOrderer().getSlackId()).isNotNull();
     assertThat(order.getOrderer().getName()).isNotNull();
-
-    assertThat(order.getReceiverId()).isNotNull();
     assertThat(order.getShippingId()).isNull();
 
     assertThat(order.getStatus()).isEqualTo(OrderStatus.CREATED);
@@ -87,7 +85,7 @@ class OrderTest {
     Order order = OrderFixture.create();
     order.completed(LocalDateTime.now());
 
-    assertThatThrownBy(() -> order.cancel(LocalDateTime.now()))
+    assertThatThrownBy(() -> order.cancel("", LocalDateTime.now()))
         .isInstanceOf(IllegalStateException.class)
         .hasMessageContaining("상태를 변경할 수 없습니다.");
   }

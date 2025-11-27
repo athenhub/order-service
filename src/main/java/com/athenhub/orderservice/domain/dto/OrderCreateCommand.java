@@ -1,8 +1,9 @@
-package com.athenhub.orderservice.domain;
+package com.athenhub.orderservice.domain.dto;
 
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import lombok.Builder;
 
 /**
  * 주문 생성을 위한 커맨드 객체이다.
@@ -31,11 +32,12 @@ import java.util.UUID;
  * @author 김지원
  * @since 1.0.0
  */
+@Builder
 public record OrderCreateCommand(
-    @NotNull UUID receiverId,
     @NotNull UUID ordererId,
     @NotNull String ordererName,
     @NotNull String slackId,
+    @NotNull UUID receiverId,
     String shippingAddress,
     String shippingDetailAddress,
     LocalDateTime shippingDueAt,
